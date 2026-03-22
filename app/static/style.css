@@ -1,0 +1,82 @@
+/* Simple, clean styles. */
+body {
+  font-family: Arial, sans-serif;
+  background: #f6f7fb;
+  margin: 0;
+  padding: 0;
+  color: #111827;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+h1 {
+  margin: 0 0 6px 0;
+  font-size: 28px;
+}
+
+.sub {
+  margin: 0 0 18px 0;
+  color: #374151;
+}
+
+code {
+  background: #eef2ff;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.row {
+  margin: 12px 0;
+}
+
+input[type="file"] {
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.status {
+  margin: 10px 0;
+  color: #6b7280;
+  min-height: 18px;
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+pre {
+  overflow: auto;
+  background: #0b1220;
+  color: #e5e7eb;
+  padding: 12px;
+  border-radius: 10px;
+  margin: 0;
+  max-height: 520px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+

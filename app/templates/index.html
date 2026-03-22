@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resume Parser</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Resume Parser</h1>
+      <p class="sub">
+        Upload a resume in <code>.pdf</code>, <code>.docx</code> or <code>.doc</code> and get extracted JSON.
+      </p>
+
+      <form id="uploadForm">
+        <div class="row">
+          <input id="fileInput" name="file" type="file" accept=".pdf,.docx,.doc" required />
+        </div>
+        <div class="row">
+          <button id="parseBtn" type="submit">Parse Resume</button>
+          
+        </div>
+      </form>
+
+      <div id="status" class="status" aria-live="polite"></div>
+
+      <div class="panel">
+        <h2>Result</h2>
+        <pre id="result"></pre>
+      </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,725 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 7 /Kids [4 0 R 6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R] >>
+endobj
+3 0 obj
+<< /Length 2105 >>
+stream
+BT
+/F1 10 Tf
+54 738 Td
+(RESUME PARSER PROJECT REPORT) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(1. PROJECT OVERVIEW) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(This repository implements a resume parsing web application using FastAPI. Users upload) Tj
+0 -14 Td
+(resume files in PDF, DOCX, or DOC format and receive structured JSON containing contact) Tj
+0 -14 Td
+(details, education, work experience, skills, and projects.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(The project uses a hybrid extraction approach:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* text extraction from uploaded files) Tj
+0 -14 Td
+(* rule-based parsing for core sections) Tj
+0 -14 Td
+(* optional spaCy enrichment) Tj
+0 -14 Td
+(* LLM-based refinement through Ollama, Groq, or Hugging Face) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(This design keeps the system usable even when the selected LLM provider is unavailable) Tj
+0 -14 Td
+(or produces incomplete output.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(2. MAIN GOALS) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* Accept resume uploads through a browser UI or API) Tj
+0 -14 Td
+(* Extract readable text from common resume file formats) Tj
+0 -14 Td
+(* Convert unstructured text into structured resume fields) Tj
+0 -14 Td
+(* Improve extraction quality with heuristics and optional NLP enrichment) Tj
+0 -14 Td
+(* Support multiple LLM backends with environment-based configuration) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(3. TECHNOLOGY STACK) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* Backend framework: FastAPI) Tj
+0 -14 Td
+(* Server: Uvicorn) Tj
+0 -14 Td
+(* Templates: Jinja2) Tj
+0 -14 Td
+(* File parsing:) Tj
+0 -14 Td
+(  - `pdfplumber` for PDF) Tj
+0 -14 Td
+(  - `python-docx` for DOCX) Tj
+0 -14 Td
+(  - `textract` as a best-effort optional DOC parser) Tj
+0 -14 Td
+(* NLP:) Tj
+0 -14 Td
+(  - rule-based parsing in custom Python code) Tj
+0 -14 Td
+(  - optional spaCy enrichment) Tj
+0 -14 Td
+(* LLM providers:) Tj
+0 -14 Td
+(  - local Ollama) Tj
+0 -14 Td
+(  - Groq API) Tj
+0 -14 Td
+(  - Hugging Face Inference API) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(4. HIGH-LEVEL ARCHITECTURE) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(The project flow is:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(1. User uploads a resume through `/` or `/api/parse`) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 1812 >>
+stream
+BT
+/F1 10 Tf
+54 738 Td
+(2. `app/services/text_extractor.py` converts the file into plain text) Tj
+0 -14 Td
+(3. `app/services/hybrid_extractor.py` performs rule-based section and entity extraction) Tj
+0 -14 Td
+(4. `app/services/spacy_enricher.py` optionally enriches the parsed result) Tj
+0 -14 Td
+(5. The selected LLM extractor refines and completes the structured result) Tj
+0 -14 Td
+(6. `app/main.py` normalizes the schema and returns the final response) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(This means the system is not purely LLM-driven. The rule-based parser is the first-stage) Tj
+0 -14 Td
+( extractor and the LLM acts as a refinement layer.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(5. API SURFACE) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`GET /`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Serves the HTML upload interface.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`GET /HEALTH`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Simple health check endpoint returning:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(```json) Tj
+0 -14 Td
+({"status": "ok"}) Tj
+0 -14 Td
+(```) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`POST /API/PARSE`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Primary API endpoint. Accepts a resume file and returns a `ResumeParseResult` object) Tj
+0 -14 Td
+(with:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* `filename`) Tj
+0 -14 Td
+(* `content_type`) Tj
+0 -14 Td
+(* `contact`) Tj
+0 -14 Td
+(* `education`) Tj
+0 -14 Td
+(* `work_experience`) Tj
+0 -14 Td
+(* `skills`) Tj
+0 -14 Td
+(* `projects`) Tj
+0 -14 Td
+(* `transformer_model`) Tj
+0 -14 Td
+(* `raw_text_characters`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`POST /API/PARSE-DEBUG`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Debug endpoint that returns:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* extracted text preview) Tj
+0 -14 Td
+(* contact hints) Tj
+0 -14 Td
+(* transformer generation preview) Tj
+0 -14 Td
+(* hybrid pre-extracted data) Tj
+0 -14 Td
+(* model-refined result) Tj
+0 -14 Td
+(* final parsed result) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 2035 >>
+stream
+BT
+/F1 10 Tf
+54 738 Td
+() Tj
+0 -14 Td
+(6. CORE MODULES) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`APP/MAIN.PY`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(This is the main application entrypoint. It:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* loads environment variables from `.env`) Tj
+0 -14 Td
+(* selects the LLM extractor with `_get_extractor\(\)`) Tj
+0 -14 Td
+(* creates FastAPI routes) Tj
+0 -14 Td
+(* handles upload size limits and text truncation) Tj
+0 -14 Td
+(* merges rule-based and model-based results) Tj
+0 -14 Td
+(* normalizes the response schema) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Provider selection logic:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* explicit `LLM_PROVIDER=hf|groq|ollama`) Tj
+0 -14 Td
+(* otherwise auto-detects based on available environment variables) Tj
+0 -14 Td
+(* defaults to Ollama when nothing is configured) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`APP/SERVICES/TEXT_EXTRACTOR.PY`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Responsible for raw text extraction from uploaded files.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* PDF parsing uses `pdfplumber`) Tj
+0 -14 Td
+(* DOCX parsing uses `python-docx`) Tj
+0 -14 Td
+(* DOC parsing uses `textract` if installed) Tj
+0 -14 Td
+(* regexes extract email and phone hints) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(This module is the document parser layer, not the semantic resume parser.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`APP/SERVICES/HYBRID_EXTRACTOR.PY`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(This is the main semantic parser in the project.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(It performs:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* section detection using common headings) Tj
+0 -14 Td
+(* contact extraction with regex and top-of-document heuristics) Tj
+0 -14 Td
+(* education parsing using degree and year patterns) Tj
+0 -14 Td
+(* work experience parsing using duration and role heuristics) Tj
+0 -14 Td
+(* skills parsing using delimiter and label normalization) Tj
+0 -14 Td
+(* project extraction with fallback recovery) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(This module is the primary parser used before any LLM refinement.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`APP/SERVICES/SPACY_ENRICHER.PY`) Tj
+0 -14 Td
+() Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 2065 >>
+stream
+BT
+/F1 10 Tf
+54 738 Td
+(Optional enrichment layer enabled via `SPACY_ENABLED=1`.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(It can:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* infer person and organization entities) Tj
+0 -14 Td
+(* improve missing contact names) Tj
+0 -14 Td
+(* enrich skills from known term lists) Tj
+0 -14 Td
+(* fix mixed company and position values) Tj
+0 -14 Td
+(* backfill education institutions from detected organizations) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`APP/SERVICES/OLLAMA_EXTRACTOR.PY`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Local LLM refinement using the Ollama chat API.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* default model constant is `llava:latest`) Tj
+0 -14 Td
+(* base URL defaults to `http://localhost:11434`) Tj
+0 -14 Td
+(* prompt includes both raw resume text and pre-extracted hints) Tj
+0 -14 Td
+(* output is expected to be valid JSON only) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`APP/SERVICES/GROQ_EXTRACTOR.PY`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Cloud LLM refinement using the Groq API.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* requires `GROQ_API_KEY`) Tj
+0 -14 Td
+(* default model is `llama-3.1-8b-instant`) Tj
+0 -14 Td
+(* includes defensive JSON extraction and key normalization) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`APP/SERVICES/HF_EXTRACTOR.PY`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Cloud LLM refinement through Hugging Face hosted inference.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* requires `HF_TOKEN`) Tj
+0 -14 Td
+(* optional model via `HF_MODEL`) Tj
+0 -14 Td
+(* uses HTTP calls directly with `urllib`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`APP/SERVICES/TRANSFORMER_EXTRACTOR.PY`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Legacy or alternative local transformer-based extractor using `transformers`.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(It appears to be available in the repository but is not wired into `app/main.py` for the) Tj
+0 -14 Td
+( active application flow.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(`APP/SERVICES/HF_NER_EXTRACTOR.PY`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Additional NER-related support code exists in the repository, but it is not part of the) Tj
+0 -14 Td
+(main request flow exposed by `app/main.py`.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(7. DATA SCHEMA) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 1404 >>
+stream
+BT
+/F1 10 Tf
+54 738 Td
+() Tj
+0 -14 Td
+(The response schema is defined in `app/schemas.py`.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(CONTACT) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* `name`) Tj
+0 -14 Td
+(* `email`) Tj
+0 -14 Td
+(* `phone`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(EDUCATION ITEM) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* `institution`) Tj
+0 -14 Td
+(* `degree`) Tj
+0 -14 Td
+(* `graduation_year`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(WORK EXPERIENCE ITEM) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* `company`) Tj
+0 -14 Td
+(* `position`) Tj
+0 -14 Td
+(* `description`) Tj
+0 -14 Td
+(* `duration`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(PROJECT ITEM) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* `name`) Tj
+0 -14 Td
+(* `duration`) Tj
+0 -14 Td
+(* `tech_stack`) Tj
+0 -14 Td
+(* `description`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(8. FRONTEND) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(The frontend is minimal and server-rendered.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* template: `app/templates/index.html`) Tj
+0 -14 Td
+(* styling: `app/static/style.css`) Tj
+0 -14 Td
+(* client logic: `app/static/app.js`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Its job is primarily to upload files and display the extracted JSON result.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(9. ENVIRONMENT CONFIGURATION) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Key environment variables used by the application:) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* `LLM_PROVIDER`) Tj
+0 -14 Td
+(* `OLLAMA_MODEL`) Tj
+0 -14 Td
+(* `OLLAMA_BASE_URL`) Tj
+0 -14 Td
+(* `GROQ_API_KEY`) Tj
+0 -14 Td
+(* `GROQ_MODEL`) Tj
+ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Length 2639 >>
+stream
+BT
+/F1 10 Tf
+54 738 Td
+(* `HF_TOKEN`) Tj
+0 -14 Td
+(* `HF_MODEL`) Tj
+0 -14 Td
+(* `SPACY_ENABLED`) Tj
+0 -14 Td
+(* `SPACY_MODEL`) Tj
+0 -14 Td
+(* `MAX_UPLOAD_BYTES`) Tj
+0 -14 Td
+(* `MAX_TEXT_CHARS`) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(The app loads configuration through `python-dotenv`, so values can be stored in `.env`.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(10. STRENGTHS) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* Clear separation between text extraction, heuristic parsing, and model refinement) Tj
+0 -14 Td
+(* Works with multiple LLM providers) Tj
+0 -14 Td
+(* Has a fallback-first architecture instead of depending only on model output) Tj
+0 -14 Td
+(* Includes a debug endpoint that helps inspect extraction stages) Tj
+0 -14 Td
+(* Schema normalization reduces output inconsistency) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(11. RISKS AND LIMITATIONS) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* Heuristic parsing may break on uncommon resume layouts) Tj
+0 -14 Td
+(* DOC support depends on extra optional tooling through `textract`) Tj
+0 -14 Td
+(* No automated tests are present in the visible repository) Tj
+0 -14 Td
+(* Default Ollama model in code is `llava:latest`, while the README examples reference) Tj
+0 -14 Td
+(`llama3.2`; that mismatch can confuse setup) Tj
+0 -14 Td
+(* Some text contains encoding artifacts such as `?` and `?`, which suggests source text) Tj
+0 -14 Td
+(normalization could be improved) Tj
+0 -14 Td
+(* Legacy extractor modules remain in the codebase, which may create maintenance) Tj
+0 -14 Td
+(ambiguity) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(12. SUGGESTED IMPROVEMENTS) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* Add unit tests for text extraction, hybrid parsing, and schema normalization) Tj
+0 -14 Td
+(* Add integration tests for `/api/parse`) Tj
+0 -14 Td
+(* Align README defaults with the actual default Ollama model in code) Tj
+0 -14 Td
+(* Standardize text cleanup to handle encoding artifacts before parsing) Tj
+0 -14 Td
+(* Add logging around provider selection and LLM failures) Tj
+0 -14 Td
+(* Consider moving inactive extractor implementations behind explicit feature flags or) Tj
+0 -14 Td
+(documenting them as experimental) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(13. FILE INVENTORY SUMMARY) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(* `app/main.py`: API entrypoint and orchestration) Tj
+0 -14 Td
+(* `app/schemas.py`: response schema definitions) Tj
+0 -14 Td
+(* `app/services/text_extractor.py`: file-to-text extraction) Tj
+0 -14 Td
+(* `app/services/hybrid_extractor.py`: primary rule-based parser) Tj
+0 -14 Td
+(* `app/services/spacy_enricher.py`: optional enrichment) Tj
+0 -14 Td
+(* `app/services/ollama_extractor.py`: Ollama refinement) Tj
+0 -14 Td
+(* `app/services/groq_extractor.py`: Groq refinement) Tj
+ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 13 0 R >>
+endobj
+15 0 obj
+<< /Length 1270 >>
+stream
+BT
+/F1 10 Tf
+54 738 Td
+(* `app/services/hf_extractor.py`: Hugging Face refinement) Tj
+0 -14 Td
+(* `app/services/transformer_extractor.py`: alternative local transformer implementation) Tj
+0 -14 Td
+(* `app/services/hf_ner_extractor.py`: additional NER support module) Tj
+0 -14 Td
+(* `app/templates/index.html`: UI template) Tj
+0 -14 Td
+(* `app/static/app.js`: frontend client logic) Tj
+0 -14 Td
+(* `app/static/style.css`: frontend styling) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(14. CONCLUSION) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(This project is a practical hybrid resume parser built around FastAPI. Its most) Tj
+0 -14 Td
+(important design choice is the combination of deterministic heuristics and optional LLM) Tj
+0 -14 Td
+(refinement. That approach improves reliability compared with a pure model-driven parser) Tj
+0 -14 Td
+(and makes the application flexible across local and cloud inference providers.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(For a small-to-medium engineering assignment or portfolio project, the architecture is) Tj
+0 -14 Td
+(sensible and easy to explain. The next step to improve production readiness would be) Tj
+0 -14 Td
+(stronger test coverage, tighter configuration consistency, and clearer separation) Tj
+0 -14 Td
+(between active and experimental extractor modules.) Tj
+ET
+endstream
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 15 0 R >>
+endobj
+17 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+xref
+0 18
+0000000000 65535 f 
+0000000015 00000 n 
+0000000083 00000 n 
+0000000180 00000 n 
+0000002337 00000 n 
+0000002463 00000 n 
+0000004327 00000 n 
+0000004453 00000 n 
+0000006540 00000 n 
+0000006666 00000 n 
+0000008783 00000 n 
+0000008910 00000 n 
+0000010367 00000 n 
+0000010495 00000 n 
+0000013187 00000 n 
+0000013315 00000 n 
+0000014638 00000 n 
+0000014766 00000 n 
+trailer
+<< /Size 18 /Root 17 0 R >>
+startxref
+14816
+%%EOF
